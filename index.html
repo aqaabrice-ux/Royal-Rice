@@ -124,43 +124,30 @@ input,textarea,select{font-family:inherit; font-size:1rem;}
 .skip-link:focus{left:0;}
 
 /* ============ TOP UTILITY BAR ============ */
-.topbar{
-  background:var(--emerald-900); color:var(--gold-100);
-  font-size:.78rem; letter-spacing:.03em; overflow:hidden; position:relative;
-}
-.topbar-track{
-  display:flex; gap:56px; white-space:nowrap; padding:9px 0;
-  animation:scrollTrack 26s linear infinite;
-  width:max-content;
-}
-@media (prefers-reduced-motion: reduce){ .topbar-track{animation:none; justify-content:center; width:100%;} }
-@keyframes scrollTrack{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
-.topbar-track span{display:inline-flex; align-items:center; gap:8px;}
-.topbar-track span::before{content:"◆"; font-size:.55rem; color:var(--gold-500);}
-
 /* ============ HEADER ============ */
 header.site-header{
   position:sticky; top:0; z-index:200;
-  background:var(--emerald-900);
-  border-bottom:1px solid rgba(199,163,78,.25);
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
 }
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
   padding:16px clamp(20px,3.6vw,56px); width:100%; margin:0; gap:24px;
 }
-.brand{display:flex; align-items:center; gap:12px; color:var(--ivory);}
-.brand .mark{color:var(--gold-500);}
+.brand{display:flex; align-items:center; gap:12px; color:var(--charcoal);}
+.brand .mark{color:var(--gold-700);}
 .brand-text{display:flex; flex-direction:column; line-height:1;}
-.brand-text .name{font-family:'Fraunces',serif; font-weight:700; font-size:1.5rem; color:var(--ivory); letter-spacing:.01em;}
-.brand-text .sub{font-size:.6rem; letter-spacing:.24em; text-transform:uppercase; color:var(--gold-300); margin-top:4px;}
+.brand-text .name{font-family:'Fraunces',serif; font-weight:700; font-size:1.5rem; color:var(--charcoal); letter-spacing:.01em;}
+.brand-text .sub{font-size:.6rem; letter-spacing:.24em; text-transform:uppercase; color:var(--gold-700); margin-top:4px;}
 
 nav.main-nav{display:flex; align-items:center; gap:6px;}
 .nav-item{position:relative;}
 .nav-link{
-  display:flex; align-items:center; gap:5px; padding:12px 14px; color:var(--ivory);
-  font-size:.86rem; letter-spacing:.03em; border-radius:var(--radius-s); transition:color .2s var(--ease);
+  display:flex; align-items:center; gap:5px; padding:11px 20px; color:var(--charcoal-70);
+  font-size:.86rem; font-weight:600; letter-spacing:.03em; border-radius:100px; transition:all .2s var(--ease);
 }
-.nav-link:hover, .nav-link.active{color:var(--gold-300);}
+.nav-link:hover{color:var(--emerald-700); background:var(--ivory-deep);}
+.nav-link.active{color:var(--ivory); background:var(--emerald-700);}
 .nav-item .chev{width:9px; height:9px; transition:transform .2s var(--ease);}
 .nav-item:hover .chev{transform:rotate(180deg);}
 
@@ -178,24 +165,24 @@ nav.main-nav{display:flex; align-items:center; gap:6px;}
 .icon-btn{
   position:relative; width:42px; height:42px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
-  background:transparent; border:1px solid rgba(199,163,78,.35); color:var(--ivory);
+  background:transparent; border:1px solid var(--line); color:var(--emerald-700);
   transition:all .2s var(--ease);
 }
-.icon-btn:hover{background:rgba(199,163,78,.14); border-color:var(--gold-500);}
+.icon-btn:hover{background:var(--ivory-deep); border-color:var(--emerald-500);}
 #openSearchBtn{display:none;}
 .cart-badge{
-  position:absolute; top:-6px; right:-6px; background:var(--gold-500); color:var(--emerald-900);
+  position:absolute; top:-6px; right:-6px; background:var(--emerald-700); color:var(--ivory);
   font-size:.65rem; font-weight:700; min-width:18px; height:18px; border-radius:50%;
   display:flex; align-items:center; justify-content:center; padding:0 4px;
 }
 .btn-quote{
-  background:var(--gold-500); color:var(--emerald-900); border:none; padding:11px 20px;
+  background:var(--emerald-700); color:var(--ivory); border:none; padding:11px 20px;
   border-radius:100px; font-weight:600; font-size:.84rem; letter-spacing:.02em;
   display:inline-flex; align-items:center; gap:8px; transition:all .2s var(--ease);
   white-space:nowrap;
 }
-.btn-quote:hover{background:var(--gold-300); transform:translateY(-1px); box-shadow:0 8px 18px -8px rgba(199,163,78,.6);}
-.hamburger{display:none; background:none; border:none; color:var(--ivory); width:42px; height:42px; align-items:center; justify-content:center;}
+.btn-quote:hover{background:var(--emerald-600); transform:translateY(-1px); box-shadow:0 8px 18px -8px rgba(15,92,64,.4);}
+.hamburger{display:none; background:none; border:none; color:var(--charcoal); width:42px; height:42px; align-items:center; justify-content:center;}
 
 /* ============ GENERIC BUTTONS ============ */
 .btn{
@@ -719,7 +706,6 @@ footer.site-footer{background:var(--emerald-900); color:rgba(251,247,238,.82); p
 }
 @media (max-width: 600px){
   .container{padding:0 18px;}
-  .topbar{display:none;}
   .header-inner{padding:12px 16px;}
   .brand{gap:8px;}
   .brand .mark svg{width:26px; height:26px;}
@@ -833,20 +819,6 @@ footer.site-footer{background:var(--emerald-900); color:rgba(251,247,238,.82); p
   </defs>
 </svg>
 
-<!-- ============ TOP UTILITY BAR ============ -->
-<div class="topbar" aria-hidden="true">
-  <div class="topbar-track">
-    <span>Trading from Jodia Bazaar, Karachi since 1980</span>
-    <span>Retail &amp; Wholesale (B2B) Supply</span>
-    <span>Bulk Pricing on Rice &amp; Restaurant Supplies</span>
-    <span>Nationwide Delivery Across Pakistan</span>
-    <span>Trading from Jodia Bazaar, Karachi since 1980</span>
-    <span>Retail &amp; Wholesale (B2B) Supply</span>
-    <span>Bulk Pricing on Rice &amp; Restaurant Supplies</span>
-    <span>Nationwide Delivery Across Pakistan</span>
-  </div>
-</div>
-
 <!-- ============ HEADER ============ -->
 <header class="site-header">
   <div class="header-inner">
@@ -864,23 +836,10 @@ footer.site-footer{background:var(--emerald-900); color:rgba(251,247,238,.82); p
     <nav class="main-nav" aria-label="Primary">
       <div class="nav-item"><a href="#/home" class="nav-link" data-nav="home">Home</a></div>
       <div class="nav-item">
-        <a href="#/products/rice" class="nav-link" data-nav="products">Rice <svg class="chev" viewBox="0 0 24 24"><use href="#ic-chev"/></svg></a>
+        <a href="#/products/rice" class="nav-link" data-nav="products">Products <svg class="chev" viewBox="0 0 24 24"><use href="#ic-chev"/></svg></a>
         <div class="dropdown">
-          <a href="#/products/rice/basmati">Basmati Rice</a>
-          <a href="#/products/rice/sella">Sella Rice</a>
-          <a href="#/products/rice/brown">Brown Rice</a>
-          <a href="#/products/rice/white-basmati">White Basmati Rice</a>
-        </div>
-      </div>
-      <div class="nav-item">
-        <a href="#/products/restaurant" class="nav-link" data-nav="products">Restaurant Supplies <svg class="chev" viewBox="0 0 24 24"><use href="#ic-chev"/></svg></a>
-        <div class="dropdown">
-          <a href="#/products/restaurant/sauces-sweets">Sauces &amp; Sweets</a>
-          <a href="#/products/restaurant/noodles-pastas">Noodles &amp; Pastas</a>
-          <a href="#/products/restaurant/flours">Flours</a>
-          <a href="#/products/restaurant/cooking-oils">Cooking Oils</a>
-          <a href="#/products/restaurant/masala-spices">Masala &amp; Spices</a>
-          <a href="#/products/restaurant/dry-ingredients">Dry Ingredients</a>
+          <a href="#/products/rice">Rice</a>
+          <a href="#/products/restaurant">Restaurant Supplies</a>
         </div>
       </div>
       <div class="nav-item"><a href="#/about" class="nav-link" data-nav="about">About</a></div>
