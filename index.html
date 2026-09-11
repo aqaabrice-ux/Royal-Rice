@@ -1578,14 +1578,33 @@ function applyFirestoreCatalog(data){
 
 var PRODUCTS_BY_ID = {};
 var _catalogResolved = false;
+var _catalogSource = "pending"; // "pending" | "fallback" | "firestore"
 var _catalogWaiters = [];
 function resolveCatalog(firestoreData){
-  if (_catalogResolved) return;
+  var isRealData = !!(firestoreData && firestoreData.products && firestoreData.products.length);
+
+  if (_catalogResolved){
+    // Already rendered once (likely the safety-timeout fallback). If real
+    // Firestore data shows up late, apply it and refresh what's on screen
+    // instead of silently discarding it.
+    if (isRealData && _catalogSource !== "firestore"){
+      applyFirestoreCatalog(firestoreData);
+      _catalogSource = "firestore";
+      PRODUCTS_BY_ID = {};
+      PRODUCTS.forEach(function(p){ PRODUCTS_BY_ID[p.id] = p; });
+      renderCart();
+      route();
+    }
+    return;
+  }
+
   _catalogResolved = true;
-  if (firestoreData && firestoreData.products && firestoreData.products.length){
+  if (isRealData){
     applyFirestoreCatalog(firestoreData);
+    _catalogSource = "firestore";
   } else {
     loadAdminOverrides(); // legacy localStorage fallback, else built-in defaults stand
+    _catalogSource = "fallback";
   }
   PRODUCTS_BY_ID = {};
   PRODUCTS.forEach(function(p){ PRODUCTS_BY_ID[p.id] = p; });
@@ -2304,8 +2323,12 @@ document.addEventListener("DOMContentLoaded", init);
 
   async function loadCatalogFromFirestore(){
     try{
-      var productsSnap = await getDocs(collection(db, "products"));
-      var subcatsSnap = await getDocs(collection(db, "subcategories"));
+      var results = await Promise.all([
+        getDocs(collection(db, "products")),
+        getDocs(collection(db, "subcategories"))
+      ]);
+      var productsSnap = results[0];
+      var subcatsSnap = results[1];
 
       var products = [];
       productsSnap.forEach(function(docSnap){ products.push(docSnap.data()); });
