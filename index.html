@@ -305,8 +305,8 @@ nav.main-nav{display:flex; align-items:center; gap:6px;}
 }
 .product-card:hover{transform:translateY(-4px); box-shadow:var(--shadow-soft); border-color:var(--gold-300);}
 .product-art{
-  aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; position:relative;
-  cursor:pointer;
+  aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; position:relative;
+  cursor:pointer; overflow:hidden;
 }
 .product-art .icon-wrap{
   width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
@@ -520,7 +520,7 @@ footer.site-footer{background:var(--emerald-900); color:rgba(251,247,238,.82); p
 .cart-empty{display:flex; flex-direction:column; align-items:center; text-align:center; padding:60px 20px; color:var(--charcoal-45); gap:14px;}
 .cart-empty svg{color:var(--line);}
 .cart-line{display:flex; gap:14px; padding:18px 0; border-bottom:1px solid var(--line);}
-.cart-line .thumb{width:64px; height:64px; border-radius:var(--radius-s); background:var(--ivory-deep); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.cart-line .thumb{width:64px; height:64px; border-radius:var(--radius-s); background:var(--ivory-deep); display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; overflow:hidden;}
 .cart-line .info{flex:1; min-width:0;}
 .cart-line .name{font-weight:500; font-size:.92rem; margin-bottom:2px;}
 .cart-line .unit{font-size:.76rem; color:var(--charcoal-45);}
@@ -650,7 +650,7 @@ footer.site-footer{background:var(--emerald-900); color:rgba(251,247,238,.82); p
 .search-results{max-height:360px; overflow-y:auto; margin-top:4px;}
 .search-result-item{display:flex; gap:12px; align-items:center; padding:10px 2px; border-bottom:1px solid var(--line); cursor:pointer;}
 .search-result-item:hover{background:var(--ivory-deep);}
-.search-result-item .thumb{width:40px; height:40px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.search-result-item .thumb{width:40px; height:40px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; overflow:hidden;}
 .search-result-item .info{flex:1; min-width:0;}
 .search-result-item .name{font-size:.86rem; font-weight:500;}
 .search-result-item .cat{font-size:.72rem; color:var(--charcoal-45);}
@@ -1641,7 +1641,7 @@ function productArtWrap(p, big){
   var size = big ? 150 : 56;
   var iconSize = big ? 62 : 24;
   var inner = p.image
-    ? '<img src="'+p.image+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:cover;">'
+    ? '<img src="'+p.image+'" alt="'+p.name+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">'
     : '<div class="icon-wrap" style="width:'+size+'px;height:'+size+'px;color:var(--emerald-800, var(--emerald-700))">' + productArtHTML(p, iconSize) + '</div>';
   return '<div class="product-art" style="background:'+bg+'" data-goto="'+p.id+'">' + inner + '</div>';
 }
@@ -1856,7 +1856,7 @@ function renderProductDetail(p){
       '<div class="pd-stock"><span class="dot"></span>In Stock</div>' +
       '<div class="pd-art" style="background:'+bg+'">' +
         (p.image
-          ? '<img src="'+p.image+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:cover;">'
+          ? '<img src="'+p.image+'" alt="'+p.name+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">'
           : '<div class="icon-wrap" style="color:var(--emerald-800, var(--emerald-700))">'+productArtHTML(p,46)+'</div>') +
       '</div>' +
     '</div>' +
@@ -2000,7 +2000,7 @@ function renderCart(){
       var size = p.sizes[line.sizeIndex];
       var bg = SUB_COLOR[p.subcategory] || SUB_COLOR["basmati"];
       return '<div class="cart-line">' +
-        '<div class="thumb" style="background:'+bg+'; color:var(--emerald-700); overflow:hidden;">'+(p.image ? '<img src="'+p.image+'" alt="" style="width:100%;height:100%;object-fit:cover;">' : productArtHTML(p,26))+'</div>' +
+        '<div class="thumb" style="background:'+bg+'; color:var(--emerald-700); overflow:hidden;">'+(p.image ? '<img src="'+p.image+'" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">' : productArtHTML(p,26))+'</div>' +
         '<div class="info">' +
           '<div class="name">'+p.name+'</div>' +
           '<div class="unit">'+size.l+' pack</div>' +
@@ -2107,7 +2107,7 @@ function renderSearchResults(query){
   wrap.innerHTML = results.map(function(p){
     var bg = SUB_COLOR[p.subcategory] || SUB_COLOR["basmati"];
     return '<div class="search-result-item" data-goto="'+p.id+'">' +
-      '<div class="thumb" style="background:'+bg+'; color:var(--emerald-700); overflow:hidden;">'+(p.image ? '<img src="'+p.image+'" alt="" style="width:100%;height:100%;object-fit:cover;">' : productArtHTML(p,20))+'</div>' +
+      '<div class="thumb" style="background:'+bg+'; color:var(--emerald-700); overflow:hidden;">'+(p.image ? '<img src="'+p.image+'" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">' : productArtHTML(p,20))+'</div>' +
       '<div class="info"><div class="name">'+p.name+'</div><div class="cat">'+SUBCATEGORY_LABELS[p.subcategory]+'</div></div>' +
       '<div class="price">'+fmt(p.price)+'</div>' +
     '</div>';
